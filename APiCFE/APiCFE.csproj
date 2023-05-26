@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CFE-Domain\CFE-Domain.csproj" />
+    <ProjectReference Include="..\CFE-Services\CFE-Services.csproj" />
     <ProjectReference Include="..\CFEDataBaseContext\CFE-Database.csproj" />
   </ItemGroup>
 

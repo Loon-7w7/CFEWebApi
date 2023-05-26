@@ -1,4 +1,5 @@
 using CFE_DataBase;
+using CFE_Services.General;
 using Microsoft.EntityFrameworkCore;
 
 internal class Program
@@ -19,7 +20,11 @@ internal class Program
                 opntion => opntion.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
                 mysqlOptions => { mysqlOptions.CommandTimeout(60); }) 
             );
-
+        // inyeccion de servicios
+        foreach( var service in RegisteredServices.Services()) 
+        {
+            builder.Services.AddScoped(service);
+        }
         var app = builder.Build();
 
 
