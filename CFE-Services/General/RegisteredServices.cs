@@ -1,4 +1,5 @@
-﻿using CFE_Services.Repositorios;
+﻿using CFE_Services.Implementacion;
+using CFE_Services.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace CFE_Services.General
             return new List<ServicesEntity> 
             {
                 new ServicesEntity{Irepositorio = typeof(IRepository<>), repositorio = typeof(Repositorio<>)},
+                new ServicesEntity{Irepositorio = typeof(IMaterialRepository), repositorio = typeof(MaterialService)}
             };
         }
     }
