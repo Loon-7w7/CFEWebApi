@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using APiCFE.Middleware;
 
 internal class Program
 {
@@ -80,7 +81,8 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
+        //middlewares
+        app.UseMiddleware<ErrorHandlingMiddleware>();
         //Migraciones
         using (var Scope = app.Services.CreateScope())
         {
