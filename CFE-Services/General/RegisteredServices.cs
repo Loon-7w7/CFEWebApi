@@ -13,12 +13,17 @@ namespace CFE_Services.General
     /// </summary>
     public class RegisteredServices
     {
+        /// <summary>
+        /// Lista de servicios
+        /// </summary>
+        /// <returns></returns>
         public static List<ServicesEntity> Services() 
         {
             return new List<ServicesEntity> 
             {
                 new ServicesEntity{Irepositorio = typeof(IRepository<>), repositorio = typeof(Repositorio<>)},
-                new ServicesEntity{Irepositorio = typeof(IMaterialRepository), repositorio = typeof(MaterialService)}
+                new ServicesEntity{Irepositorio = typeof(IMaterialRepository), repositorio = typeof(MaterialService)},
+                new ServicesEntity{Irepositorio= typeof(IUserRepository),repositorio = typeof(UserService)},
             };
         }
     }

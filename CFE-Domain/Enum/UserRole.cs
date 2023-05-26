@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 namespace CFE_Domain.Enum
 {
     /// <summary>
-    /// Unidades de medida
+    /// Roles de usuario
     /// </summary>
-    public enum UnitEmun
+    public enum UserRole
     {
-        PZA = 0,
-        M = 1,
-        KG = 2,
-        JGO = 3,
-        L = 4,
+        Admin = 0,
+        User = 1,
     }
 }

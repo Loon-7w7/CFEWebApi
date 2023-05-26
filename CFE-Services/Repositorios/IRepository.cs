@@ -39,10 +39,16 @@ namespace CFE_Services.Repositorios
         /// <returns></returns>
         Task Update(TEntity entity);
         /// <summary>
-        /// Busca dependiendo de la exprecion que se pase
+        /// Busca una lista dependiendo de la exprecion que se pase
         /// </summary>
         /// <param name="expresion">Esprecion de bsuqueda</param>
         /// <returns></returns>
         Task<List<TEntity>> SearchWhere(Expression<Func<TEntity, bool>> expresion);
+        /// <summary>
+        /// Busca una entidad dependiendo de la exprecion que se pase
+        /// </summary>
+        /// <param name="expresion">Esprecion de bsuqueda</param>
+        /// <returns></returns>
+        Task<TEntity> SearchFirst(Expression<Func<TEntity, bool>> expresion);
     }
 }

@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CFE-Requets\CFE-Requets.csproj" />
+    <ProjectReference Include="..\CFE-Responses\CFE-Responses.csproj" />
     <ProjectReference Include="..\CFEDataBaseContext\CFE-Database.csproj" />
   </ItemGroup>
 

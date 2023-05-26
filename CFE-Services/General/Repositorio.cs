@@ -95,5 +95,15 @@ namespace CFE_Services.General
         {
             return await _dbset.Where(expresion).ToListAsync();
         }
+        /// <summary>
+        /// Busca una entidad dependiendo de la exprecion que se pase
+        /// </summary>
+        /// <param name="expresion">Esprecion de bsuqueda</param>
+        /// <returns></returns>
+        public async Task<TEntity> SearchFirst(Expression<Func<TEntity, bool>> expresion)
+        {
+            
+            return await _dbset.FirstAsync(expresion);
+        }
     }
 }

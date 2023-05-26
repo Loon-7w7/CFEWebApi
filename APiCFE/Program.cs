@@ -1,6 +1,9 @@
 using CFE_DataBase;
 using CFE_Services.General;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 internal class Program
 {
@@ -25,6 +28,23 @@ internal class Program
         {
             builder.Services.AddScoped(service.Irepositorio, service.repositorio);
         }
+        //Token
+        IConfigurationSection jwtSettings = builder.Configuration.GetSection("Jwt");
+        string secretKey = jwtSettings.GetValue<string>("SecretKey");
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer
+            (
+                options => options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters() 
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.GetValue<string>("Issuer"),
+                    ValidAudience = jwtSettings.GetValue<string>("Audience"),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                }
+            );
         var app = builder.Build();
 
 

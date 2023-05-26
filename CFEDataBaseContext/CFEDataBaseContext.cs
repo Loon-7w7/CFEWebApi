@@ -1,4 +1,6 @@
-﻿using CFE_Domain.Material;
+﻿using CFE_Domain.Enum;
+using CFE_Domain.Material;
+using CFE_Domain.Usuario;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace CFE_DataBase
         /// Datos de los Materiales
         /// </summary>
         public DbSet<Material> Materials { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
         /// <summary>
         /// Contructor que resive la configuracion
         /// </summary>
@@ -51,6 +54,15 @@ namespace CFE_DataBase
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Material>();
+            modelBuilder.Entity<Usuario>().HasData(new Usuario 
+            {
+                Id = Guid.NewGuid(),
+                Username = "Loon",
+                Password = "123456789",
+                Role = UserRole.Admin,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+            });
         }
     }
 }
