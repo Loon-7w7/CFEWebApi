@@ -36,7 +36,7 @@ namespace CFE_Services.Implementacion
         /// realiza la utentificacion del usuario
         /// </summary>
         /// <param name="request">datos del usuario</param>
-        /// <returns></returns>
+        /// <returns>Regresa un token de autentificacion</returns>
         public async Task<AuthUsuarioResponse> AuthGetToken(AuthUsuarioRequest request)
         {
             Usuario? usuario = await _userRepository.SearchFirst(expresion: (x => x.Username == request.Username && x.Password == request.Password)) ;
@@ -47,8 +47,8 @@ namespace CFE_Services.Implementacion
                 var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                 var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, request.Username),
-                new Claim(ClaimTypes.Role, request.Password)
+                new Claim(ClaimTypes.Name, usuario.Username),
+                new Claim(ClaimTypes.Role, usuario.Role.ToString()),
             };
                 var token = new JwtSecurityToken(
                     issuer: _configuration.GetSection("Jwt:Issuer").Value,
