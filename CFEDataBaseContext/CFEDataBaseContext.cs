@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CFE_Database
-{
-    /// <summary>
-    /// Clase de conexion a la base de datos
-    /// </summary>
+namespace CFE_DataBase
+{/// <summary>
+ /// Clase de conexion a la base de datos
+ /// </summary>
     public class CFEDataBaseContext : DbContext
     {
         /// <summary>
@@ -21,13 +21,13 @@ namespace CFE_Database
         /// Contructor que resive la configuracion
         /// </summary>
         /// <param name="options">opcines de conexcion</param>
-        public CFEDataBaseContext(DbContextOptions<CFEDataBaseContext> options): base(options) 
+        public CFEDataBaseContext(DbContextOptions<CFEDataBaseContext> options) : base(options)
         {
         }
         /// <summary>
         /// contructor para llamar
         /// </summary>
-        public CFEDataBaseContext() 
+        public CFEDataBaseContext()
         {
         }
         /// <summary>
@@ -37,7 +37,7 @@ namespace CFE_Database
         /// <exception cref="Exception">menciona la configuracion erronea de la base de datos</exception>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured) 
+            if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseMySql("", ServerVersion.AutoDetect(""));
                 throw new Exception("No se configuro la conexcion a la base de datos");
@@ -47,7 +47,7 @@ namespace CFE_Database
         /// creador de las tablas de la base de datos
         /// </summary>
         /// <param name="modelBuilder"></param>
-        protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Material>();
