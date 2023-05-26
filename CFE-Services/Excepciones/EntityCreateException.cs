@@ -11,11 +11,15 @@ namespace CFE_Services.Excepciones
     /// </summary>
     public class EntityCreateException : Exception
     {
+        public EntityCreateException(string? message) : base(message)
+        {
+        }
+
         /// <summary>
         /// Constructor de la excepción EntityCreateException.
         /// </summary>
         /// <param name="message">Mensaje de error.</param>
-        public EntityCreateException(string message) : base(message)
+        public EntityCreateException(string message, Exception ex) : base(message)
         {
         }
     }

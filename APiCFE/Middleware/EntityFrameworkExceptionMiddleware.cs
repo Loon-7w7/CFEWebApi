@@ -22,7 +22,12 @@ namespace APiCFE.Middleware
             _next = next;
             _logger = logger;
         }
-
+        /// <summary>
+        /// Constructor del middleware EntityFrameworkExceptionMiddleware.
+        /// </summary>
+        public EntityFrameworkExceptionMiddleware()
+        {
+        }
         /// <summary>
         /// Método de invocación del middleware.
         /// </summary>

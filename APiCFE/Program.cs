@@ -82,7 +82,11 @@ internal class Program
             app.UseSwaggerUI();
         }
         //middlewares
-        app.UseMiddleware<ErrorHandlingMiddleware>();
+        foreach ( var midd in MiddlewareList.midd()) 
+        {
+            app.UseMiddleware(midd.GetType());
+        }
+        
         //Migraciones
         using (var Scope = app.Services.CreateScope())
         {

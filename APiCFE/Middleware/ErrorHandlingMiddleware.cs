@@ -17,6 +17,12 @@ namespace APiCFE.Middleware
         {
             _next = next;
         }
+        /// <summary>
+        /// Crea una nueva instancia del middleware de manejo de errores.
+        /// </summary>
+        public ErrorHandlingMiddleware()
+        {
+        }
 
         /// <summary>
         /// Invoca el middleware de manejo de errores.
