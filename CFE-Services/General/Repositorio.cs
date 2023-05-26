@@ -62,13 +62,14 @@ namespace CFE_Services.General
         /// <returns>una lista de entidades</returns>
         public async Task<List<TEntity>> AllGet() 
         {
-            try 
-            { 
-                return await _dbset.ToListAsync(); 
-            } 
-            catch (Exception ex) 
+            List<TEntity> entities = await _dbset.ToListAsync();
+            if(entities.Count == 0) 
             {
                 throw new EmptyListException($"La lista esta {entityType.Name} vacia");
+            }
+            else 
+            {
+                return entities;
             }
             
         }
@@ -79,13 +80,14 @@ namespace CFE_Services.General
         /// <returns>una entidad</returns>
         public async Task<TEntity?> GetId(Guid id) 
         {
-            try 
-            {
-                return await _dbset.FindAsync(id);
-            } 
-            catch (Exception ex) 
+            TEntity? entity = await _dbset.FindAsync(id);
+            if(entity == null) 
             {
                 throw new EntityNotFoundException($"No se encontro ningun {entityType.Name}");
+            }
+            else 
+            {
+                return entity;
             }
             
         }
@@ -135,13 +137,14 @@ namespace CFE_Services.General
         /// <returns></returns>
         public async Task<List<TEntity>> SearchWhere(Expression<Func<TEntity, bool>> expresion) 
         {
-            try
+            List<TEntity> entities = await _dbset.Where(expresion).ToListAsync();
+            if(entities.Count == 0) 
             {
-                return await _dbset.Where(expresion).ToListAsync();
+                throw new EntityNotFoundException($"No se encontro ningun {entityType.Name}");
             }
-            catch (Exception ex)
+            else 
             {
-                throw new EmptyListException($"La lista esta {entityType.Name} vacia");
+                return entities;
             }
         }
         /// <summary>
@@ -151,13 +154,14 @@ namespace CFE_Services.General
         /// <returns></returns>
         public async Task<TEntity> SearchFirst(Expression<Func<TEntity, bool>> expresion)
         {
-            try
-            {
-                return await _dbset.FirstAsync(expresion);
-            }
-            catch (Exception ex)
+            TEntity entity = await _dbset.FirstAsync(expresion);
+            if(entity == null) 
             {
                 throw new EntityNotFoundException($"No se encontro ningun {entityType.Name}");
+            }
+            else 
+            {
+                return entity;
             }
         }
     }

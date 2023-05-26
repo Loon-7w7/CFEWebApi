@@ -1,4 +1,6 @@
 ﻿using CFE_Domain.Material;
+using CFE_Requets.Material;
+using CFE_Responses.Materials;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,29 +20,29 @@ namespace CFE_Services.Repositorios
         /// </summary>
         /// <param name="id">id del material</param>
         /// <returns></returns>
-        Task<Material> GetById(Guid id);
+        Task<GetMaterialByIDResponse> GetById(GetMaterialByIDRequest request);
         /// <summary>
         /// obtiene una lista de materiales
         /// </summary>
         /// <returns></returns>
-        Task<List<Material>> GetAll();
+        Task<GetAllMaterialRespose> GetAll();
         /// <summary>
         /// Crea un material
         /// </summary>
         /// <param name="material">Datos del material</param>
         /// <returns></returns>
-        Task Add(Material material);
+        Task Add(CreateMaterialRequest request);
         /// <summary>
         /// Actuliza el material
         /// </summary>
         /// <param name="material">Material Actualizado</param>
         /// <returns></returns>
-        Task Update(Material material);
+        Task Update(UpdateMaterialRequest request);
         /// <summary>
         /// Elimina un material
         /// </summary>
         /// <param name="id">id del material</param>
         /// <returns></returns>
-        Task Delete(Guid id);
+        Task Delete(DeleteMaterialRequest request);
     }
 }

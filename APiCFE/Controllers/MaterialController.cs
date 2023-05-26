@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CFE_Requets.Material;
+using CFE_Responses.Materials;
+using CFE_Services.Repositorios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,44 +12,80 @@ namespace APiCFE.Controllers
     [ApiController]
     public class MaterialController : ControllerBase
     {
-        // GET: api/<MaterialController>
+        /// <summary>
+        /// Repositorio de materiales
+        /// </summary>
+        private readonly IMaterialRepository materialRepository;
+        /// <summary>
+        /// Costructor de materiales
+        /// </summary>
+        /// <param name="material">repositorio de materiales</param>
+        public MaterialController(IMaterialRepository material) 
+        {
+            materialRepository = material;
+        }
+        /// <summary>
+        /// Obtiene una lista de materiales
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok("Hola");
+            GetAllMaterialRespose respose = await materialRepository.GetAll();
+            return Ok(respose.materials);
         }
 
-        // GET api/<MaterialController>/5
+        /// <summary>
+        /// obtiene materiales por id
+        /// </summary>
+        /// <param name="id">id del materal</param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            return Ok();
+            GetMaterialByIDRequest request = new GetMaterialByIDRequest() { Id = id };
+            GetMaterialByIDResponse response = await materialRepository.GetById(request);
+            return Ok(response);
         }
 
-        // POST api/<MaterialController>
+        /// <summary>
+        /// crea un material
+        /// </summary>
+        /// <param name="request">datos del material</param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] string value)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Post([FromBody] CreateMaterialRequest request)
         {
-            return Ok();
+            await materialRepository.Add(request);
+            return Ok("Se creo el material correctamete");
         }
-
-        // PUT api/<MaterialController>/5
+        /// <summary>
+        /// Actualzia los materiales
+        /// </summary>
+        /// <param name="request">nuevos datos del material</param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] string value)
+        [HttpPut("Update")]
+        public async Task<IActionResult> Put([FromBody] UpdateMaterialRequest request)
         {
-            return Ok();
+            await materialRepository.Update(request);
+            return Ok("Se actulizado Correctamente");
         }
-
-        // DELETE api/<MaterialController>/5
+        /// <summary>
+        /// Elimina los materiales
+        /// </summary>
+        /// <param name="id">id de materiales</param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            return Ok();
+            DeleteMaterialRequest request = new DeleteMaterialRequest() { Id = id };
+            await materialRepository.Delete(request);
+            return Ok("Se elimino el material");
         }
     }
 }
