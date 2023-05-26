@@ -23,7 +23,7 @@ internal class Program
         // inyeccion de servicios
         foreach( var service in RegisteredServices.Services()) 
         {
-            builder.Services.AddScoped(service);
+            builder.Services.AddScoped(service.Irepositorio, service.repositorio);
         }
         var app = builder.Build();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CFE_Services.Repositorios;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,11 @@ namespace CFE_Services.General
     /// </summary>
     public class RegisteredServices
     {
-        public static List<Type> Services() 
+        public static List<ServicesEntity> Services() 
         {
-            return new List<Type> 
+            return new List<ServicesEntity> 
             {
-                typeof(Repositorio<>)
+                new ServicesEntity{Irepositorio = typeof(IRepository<>), repositorio = typeof(Repositorio<>)},
             };
         }
     }
