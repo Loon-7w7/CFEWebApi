@@ -26,7 +26,11 @@ namespace APiCFE.Controllers
         {
             repository = userRepository;
         }
-        
+        /// <summary>
+        /// autentifica al usuario
+        /// </summary>
+        /// <param name="request">Regresa un token de autentificaccion</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Auth([FromBody] AuthUsuarioRequest request)
         {

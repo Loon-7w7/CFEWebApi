@@ -24,4 +24,8 @@
     <ProjectReference Include="..\CFEDataBaseContext\CFE-Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middleware\" />
+  </ItemGroup>
+
 </Project>

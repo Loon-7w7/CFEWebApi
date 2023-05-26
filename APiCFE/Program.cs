@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.OpenApi.Models;
 
 internal class Program
 {
@@ -16,12 +17,37 @@ internal class Program
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            // Configuraciones de Swagger
+
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Description = "Authorization header using the Bearer scheme",
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer"
+            });
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+        });
         // Conexion a la base de datos
         builder.Services.AddDbContext<CFEDataBaseContext>
             (
                 opntion => opntion.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
-                mysqlOptions => { mysqlOptions.CommandTimeout(60); }) 
+                mysqlOptions => { mysqlOptions.CommandTimeout(100); }) 
             );
         // inyeccion de servicios
         foreach( var service in RegisteredServices.Services()) 
@@ -64,6 +90,7 @@ internal class Program
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
