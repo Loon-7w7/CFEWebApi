@@ -10,12 +10,8 @@ namespace CFE_Domain.Material
     /// <summary>
     /// Entidad de materiales
     /// </summary>
-    public class Material
+    public class Material : GeneralEntity
     {
-        /// <summary>
-        /// Identificador del material
-        /// </summary>
-        public Guid Id { get; set; }
         /// <summary>
         /// Folio del material
         /// </summary>
@@ -24,6 +20,10 @@ namespace CFE_Domain.Material
         /// Nombre del material
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Almacen del material
+        /// </summary>
+        public string store { get; set; }
         /// <summary>
         /// Lote del material
         /// </summary>
