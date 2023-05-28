@@ -68,7 +68,7 @@ namespace APiCFE.Controllers
         /// <param name="resquest">lista de materiales</param>
         /// <returns></returns>
         [Authorize(Roles = "Admin")]
-        [HttpPost]
+        [HttpPost("CreateMulti")]
         public async Task<IActionResult> multipost([FromBody] List<CreateMaterialRequest> list) 
         {
             CreateMultiMaterialrequest rquest = new CreateMultiMaterialrequest() { Materials = list };
