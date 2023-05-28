@@ -38,11 +38,12 @@ namespace CFE_Services.Implementacion
             Material material = new Material() 
             {
                 Id = Guid.NewGuid(),
-                Folio = request.Folio,
+                Code = request.Code,
                 Name = request.Name,
                 Unit = request.Unit,
-                store = request.store,
-                Lot = request.Lot,
+                Area = request.Area,
+                Hierarchy = request.Hierarchy,
+                unirPrice = request.unirPrice,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
             };
@@ -92,15 +93,38 @@ namespace CFE_Services.Implementacion
             Material material = new Material() 
             {
                 Id = request.Id,
-                Folio = request.Folio,
+                Code = request.Code,
                 Name = request.Name,
                 Unit = request.Unit,
-                store = request.store,
-                Lot = request.Lot,
+                Area = request.Area,
+                Hierarchy = request.Hierarchy,
                 CreateDate = request.CreateDate,
                 UpdateDate = DateTime.Now,
             };
             await _materialRepository.Update(material);
+        }
+        /// <summary>
+        /// Crea multiples materiales
+        /// </summary>
+        /// <param name="resquest">Lista de materiales</param>
+        /// <returns></returns>
+        public async Task CreateMulti(CreateMultiMaterialrequest resquest) 
+        {
+            foreach (var material in resquest.Materials) 
+            {
+                Material newmaterial = new Material()
+                {
+                    Id = Guid.NewGuid(),
+                    Code = material.Code,
+                    Name = material.Name,
+                    Unit = material.Unit,
+                    Area = material.Area,
+                    Hierarchy = material.Hierarchy,
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                };
+                await _materialRepository.Add(newmaterial);
+            }
         }
 
     }

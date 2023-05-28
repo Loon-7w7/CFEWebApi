@@ -44,5 +44,11 @@ namespace CFE_Services.Repositorios
         /// <param name="id">id del material</param>
         /// <returns></returns>
         Task Delete(DeleteMaterialRequest request);
+        /// <summary>
+        /// Crea multiples materiales
+        /// </summary>
+        /// <param name="resquest">Lista de materiales</param>
+        /// <returns></returns>
+        Task CreateMulti(CreateMultiMaterialrequest resquest);
     }
 }

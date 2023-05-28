@@ -63,6 +63,20 @@ namespace APiCFE.Controllers
             return Ok("Se creo el material correctamete");
         }
         /// <summary>
+        /// Crea multiples materiales
+        /// </summary>
+        /// <param name="resquest">lista de materiales</param>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> multipost([FromBody] List<CreateMaterialRequest> list) 
+        {
+            CreateMultiMaterialrequest rquest = new CreateMultiMaterialrequest() { Materials = list };
+            await materialRepository.CreateMulti(rquest);
+            return Ok("Se crearon exitonzamente todos los materiales");
+
+        }
+        /// <summary>
         /// Actualzia los materiales
         /// </summary>
         /// <param name="request">nuevos datos del material</param>

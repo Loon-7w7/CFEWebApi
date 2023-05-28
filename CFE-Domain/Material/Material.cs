@@ -13,24 +13,28 @@ namespace CFE_Domain.Material
     public class Material : GeneralEntity
     {
         /// <summary>
-        /// Folio del material
+        /// Codigo del material
         /// </summary>
-        public long Folio {get; set; }
+        public long Code {get; set; }
         /// <summary>
         /// Nombre del material
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Almacen del material
+        /// Area del material
         /// </summary>
-        public string store { get; set; }
+        public string Area { get; set; }
         /// <summary>
-        /// Lote del material
+        /// Gerarquia del material
         /// </summary>
-        public string Lot { get; set; }
+        public string Hierarchy { get; set; }
         /// <summary>
         /// Unidad de medida del material
         /// </summary>
         public UnitEmun Unit { get; set; }
+        /// <summary>
+        /// Precio por unidad del material
+        /// </summary>
+        public double unirPrice { get; set; }
     }
 }

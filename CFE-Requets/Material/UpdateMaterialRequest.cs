@@ -13,36 +13,34 @@ namespace CFE_Requets.Material
     public class UpdateMaterialRequest
     {
         /// <summary>
-        /// Folio del material
+        /// Codigo del material
         /// </summary>
-        public long Folio { get; set; }
+        public long Code { get; set; }
         /// <summary>
         /// Nombre del material
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Almacen del material
+        /// Area del material
         /// </summary>
-        public string store { get; set; }
+        public string Area { get; set; }
         /// <summary>
-        /// Lote del material
+        /// Gerarquia del material
         /// </summary>
-        public string Lot { get; set; }
+        public string Hierarchy { get; set; }
         /// <summary>
         /// Unidad de medida del material
         /// </summary>
         public UnitEmun Unit { get; set; }
         /// <summary>
-        /// Identidicador de la entidad
+        /// Precio por unidad del material
         /// </summary>
+        public double unirPrice { get; set; }
         public Guid Id { get; set; }
         /// <summary>
         /// Fecha de creacion de la entidad
         /// </summary>
         public DateTime CreateDate { get; set; }
-        /// <summary>
-        /// Fecha de modificacion de la entidad
-        /// </summary>
-        public DateTime UpdateDate { get; set; }
+
     }
 }
