@@ -68,5 +68,40 @@ namespace CFE_Services.Implementacion
                 throw new Exception("Usuario no encontrado");
             }
         }
+        /// <summary>
+        /// Verifica si es valido el token para inicio de secion
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public bool isValidateToken(IsVlidateTokenRequest request)
+        {
+            var secretKey = _configuration.GetSection("Jwt:SecretKey").Value;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey)),
+                ValidateIssuer = false, // Si deseas validar el emisor, configúralo según tus necesidades
+                ValidateAudience = false, // Si deseas validar la audiencia, configúralo según tus necesidades
+            };
+            ClaimsPrincipal principal;
+            try
+            {
+                principal = tokenHandler.ValidateToken(request.Token, validationParameters, out var validatedToken);
+                DateTime expirationDate = validatedToken.ValidTo;
+
+                bool isExpired = expirationDate > DateTime.UtcNow;
+
+                return isExpired;
+            }
+            catch (SecurityTokenException ex)
+            {
+                // Manejar la excepción en caso de token no válido
+                // Puedes lanzar una excepción personalizada o tomar alguna otra acción
+                throw new Exception("El token no es válido.", ex);
+            }
+
+
+        }
     }
 }

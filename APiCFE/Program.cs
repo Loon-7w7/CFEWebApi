@@ -44,6 +44,15 @@ internal class Program
         }
     });
         });
+        //cors
+        builder.Services.AddCors(Options =>
+            Options.AddPolicy("AllowAngularOrigins",
+                builde => 
+                {
+                    builde.WithOrigins("http://localhost:4200/").AllowAnyHeader().AllowAnyMethod();
+                }
+            )    
+        );
         // Conexion a la base de datos
         builder.Services.AddDbContext<CFEDataBaseContext>
             (
@@ -100,6 +109,7 @@ internal class Program
         app.UseAuthorization();
 
         app.MapControllers();
+        app.UseCors("AllowAngularOrigins");
 
         app.Run();
     }

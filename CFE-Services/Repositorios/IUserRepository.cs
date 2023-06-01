@@ -19,5 +19,11 @@ namespace CFE_Services.Repositorios
         /// <param name="request">datos del usuario</param>
         /// <returns></returns>
         Task<AuthUsuarioResponse> AuthGetToken(AuthUsuarioRequest request);
+        /// <summary>
+        /// Verifica si es valido el token para inicio de secion
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        bool isValidateToken(IsVlidateTokenRequest request);
     }
 }

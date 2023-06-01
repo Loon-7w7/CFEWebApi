@@ -43,37 +43,48 @@ namespace APiCFE.Middleware
                 _logger.LogError(ex, "Se produjo un error al actualizar la base de datos");
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 await context.Response.WriteAsync(ex.Message);
+                throw HttpResponseException(HttpStatusCode.Forbidden);
             }
             catch (EntityDeleteException ex)
             {
                 _logger.LogError(ex, "Se produjo un error al actualizar la base de datos");
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 await context.Response.WriteAsync(ex.Message);
+                throw HttpResponseException(HttpStatusCode.Forbidden);
             }
             catch (EntityUpdateException ex)
             {
                 _logger.LogError(ex, "Se produjo un error al actualizar la base de datos");
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 await context.Response.WriteAsync(ex.Message);
+                throw HttpResponseException(HttpStatusCode.Forbidden);
             }
             catch (EntityNotFoundException ex)
             {
                 _logger.LogError(ex, "Entidad no encontrada");
                 context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                 await context.Response.WriteAsync(ex.Message);
+                throw HttpResponseException(HttpStatusCode.Forbidden);
             }
             catch (EmptyListException ex)
             {
                 _logger.LogError(ex, "Lista vacía");
                 context.Response.StatusCode = (int)HttpStatusCode.NoContent;
                 await context.Response.WriteAsync(ex.Message);
+                throw HttpResponseException(HttpStatusCode.Forbidden);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Se produjo una excepción no controlada");
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 await context.Response.WriteAsync("Se produjo un error al procesar su solicitud.");
+                throw HttpResponseException(HttpStatusCode.Forbidden);
             }
+        }
+
+        private Exception HttpResponseException(HttpStatusCode forbidden)
+        {
+            throw new NotImplementedException();
         }
     }
 
