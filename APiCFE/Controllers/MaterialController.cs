@@ -94,7 +94,7 @@ namespace APiCFE.Controllers
         /// <param name="id">id de materiales</param>
         /// <returns></returns>
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             DeleteMaterialRequest request = new DeleteMaterialRequest() { Id = id };

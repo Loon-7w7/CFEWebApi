@@ -56,7 +56,7 @@ internal class Program
         // Conexion a la base de datos
         builder.Services.AddDbContext<CFEDataBaseContext>
             (
-                opntion => opntion.UseMySql(builder.Configuration.GetConnectionString("LocalConnection"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("LocalConnection")),
+                opntion => opntion.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
                 mysqlOptions => { mysqlOptions.CommandTimeout(100); }) 
             );
         // inyeccion de servicios
