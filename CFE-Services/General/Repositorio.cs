@@ -152,5 +152,22 @@ namespace CFE_Services.General
                 return entity;
 
         }
+        /// <summary>
+        /// crea multiples entidades
+        /// </summary>
+        /// <param name="entities">lista de entidades</param>
+        /// <returns></returns>
+        public async Task<bool> MultiAdd(List<TEntity> entities)
+        {
+            try 
+            {
+                await _dbset.AddRangeAsync(entities);
+                await _context.SaveChangesAsync();
+                return true;
+            }catch (Exception ex) 
+            {
+                return false;
+            }
+        }
     }
 }

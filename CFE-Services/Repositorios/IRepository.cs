@@ -15,6 +15,7 @@ namespace CFE_Services.Repositorios
         /// <param name="entity">datos de la entidad</param>
         /// <returns></returns>
         Task<bool> Add(TEntity entity);
+        Task<bool> MultiAdd(List<TEntity> entity);
         /// <summary>
         /// obtine una lista de las entidad
         /// </summary>

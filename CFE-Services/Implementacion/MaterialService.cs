@@ -106,7 +106,7 @@ namespace CFE_Services.Implementacion
         /// <returns></returns>
         public async Task<bool> CreateMulti(CreateMultiMaterialrequest resquest) 
         {
-            bool response = false;
+            List<Material> materials = new List<Material>();
             foreach (var material in resquest.Materials) 
             {
                 Material newmaterial = new Material()
@@ -118,9 +118,10 @@ namespace CFE_Services.Implementacion
                     CreateDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                 };
-                response = await _materialRepository.Add(newmaterial);
+                materials.Add(newmaterial);
             }
-            return response;
+            
+            return await _materialRepository.MultiAdd(materials); ;
         }
 
     }
