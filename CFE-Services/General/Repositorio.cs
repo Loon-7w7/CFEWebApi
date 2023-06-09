@@ -1,5 +1,4 @@
 ﻿using CFE_DataBase;
-using CFE_Services.Excepciones;
 using CFE_Services.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using System;

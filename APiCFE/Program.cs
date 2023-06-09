@@ -91,11 +91,11 @@ internal class Program
             app.UseSwaggerUI();
         }
         //middlewares
-        foreach ( var midd in MiddlewareList.midd()) 
+        foreach (var midd in MiddlewareList.midd())
         {
             app.UseMiddleware(midd.GetType());
         }
-        
+
         //Migraciones
         using (var Scope = app.Services.CreateScope())
         {

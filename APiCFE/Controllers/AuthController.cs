@@ -1,4 +1,5 @@
 ﻿using CFE_Requets.Usuario;
+using CFE_Responses;
 using CFE_Responses.Usuario;
 using CFE_Services.Repositorios;
 using Microsoft.AspNetCore.Authorization;
@@ -45,7 +46,6 @@ namespace APiCFE.Controllers
         {
             string authorizationHeader = Request.Headers.Authorization.ToString();
             string token;
-            bool IsValidateToken;
             if (!string.IsNullOrEmpty(authorizationHeader) && authorizationHeader.StartsWith("Bearer "))
             {
                token  = authorizationHeader.Substring("Bearer ".Length);
@@ -62,9 +62,18 @@ namespace APiCFE.Controllers
         [HttpPost("Cretate")]
         public async Task<IActionResult> CreateUser([FromBody]CreateUserRequest resquest) 
         {
-            bool response = await repository.CreateUser(resquest);
-            if (response) { return Ok("Se elimino el usario"); }
-            else { return BadRequest("No se puedo eliminar el usuario"); }
+            GeneralResponse response = new GeneralResponse();
+            response.success = await repository.CreateUser(resquest);
+            if (response.success) 
+            {
+                response.Message = "Se creo el usario";
+                return Ok(response); 
+            }
+            else 
+            {
+                response.Message = "No se puedo crear el usuario";
+                return BadRequest(response); 
+            }
 
         }
     }

@@ -1,4 +1,5 @@
 ﻿using CFE_Requets.Material;
+using CFE_Responses;
 using CFE_Responses.Materials;
 using CFE_Services.Repositorios;
 using Microsoft.AspNetCore.Authorization;
@@ -59,9 +60,18 @@ namespace APiCFE.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Post([FromBody] CreateMaterialRequest request)
         {
-            bool response = await materialRepository.Add(request);
-            if (response) { return Ok("Se creo el material correctamete"); }
-            else { return BadRequest("No se puedo crear el material"); }
+            GeneralResponse response = new GeneralResponse();
+            response.success = await materialRepository.Add(request);
+            if (response.success) 
+            {
+                response.Message = "Se creo el material correctamete";
+                return Ok(response); 
+            }
+            else 
+            {
+                response.Message = "No se puedo crear el material";
+                return BadRequest(response); 
+            }
         }
         /// <summary>
         /// Crea multiples materiales
@@ -72,10 +82,19 @@ namespace APiCFE.Controllers
         [HttpPost("CreateMulti")]
         public async Task<IActionResult> multipost([FromBody] List<CreateMaterialRequest> list) 
         {
+            GeneralResponse response = new GeneralResponse();
             CreateMultiMaterialrequest rquest = new CreateMultiMaterialrequest() { Materials = list };
-             bool response = await materialRepository.CreateMulti(rquest);
-            if (response) { return Ok("Se crearon exitonzamente todos los materiales"); }
-            else { return BadRequest("No se puedo crear algunos el material"); }
+            response.success = await materialRepository.CreateMulti(rquest);
+            if (response.success) 
+            {
+                response.Message = "Se crearon exitonzamente todos los materiales";
+                return Ok(response); 
+            }
+            else 
+            {
+                response.Message = "No se puedo crear algunos el material";
+                return BadRequest(response); 
+            }
 
         }
         /// <summary>
@@ -87,9 +106,19 @@ namespace APiCFE.Controllers
         [HttpPut("Update")]
         public async Task<IActionResult> Put([FromBody] UpdateMaterialRequest request)
         {
-            bool response = await materialRepository.Update(request);
-            if (response) { return Ok("Se actulizado Correctamente"); }
-            else { return BadRequest("No se pudo actualizar el material"); }
+            GeneralResponse response = new GeneralResponse();
+
+            response.success = await materialRepository.Update(request);
+            if (response.success) 
+            {
+                response.Message = "Se actulizado Correctamente";
+                return Ok(response); 
+            }
+            else 
+            {
+                response.Message = "No se pudo actualizar el material";
+                return BadRequest("No se pudo actualizar el material"); 
+            }
             
         }
         /// <summary>
@@ -101,10 +130,20 @@ namespace APiCFE.Controllers
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
+            GeneralResponse response = new GeneralResponse();
             DeleteMaterialRequest request = new DeleteMaterialRequest() { Id = id };
-            bool response = await materialRepository.Delete(request);
-            if (response)  {  return Ok("Se elimino el material"); }
-            else  { return BadRequest("No se puedo eliminar el material"); }
+            response.success = await materialRepository.Delete(request);
+            if (response.success)  
+            {
+                response.Message = "Se elimino el material";
+                return Ok(response);
+
+            }
+            else  
+            {
+                response.Message = "No se puedo eliminar el material";
+                return BadRequest("No se puedo eliminar el material"); 
+            }
             
         }
     }
