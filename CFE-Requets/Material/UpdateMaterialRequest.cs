@@ -21,14 +21,6 @@ namespace CFE_Requets.Material
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Area del material
-        /// </summary>
-        public string Area { get; set; }
-        /// <summary>
-        /// Gerarquia del material
-        /// </summary>
-        public string Hierarchy { get; set; }
-        /// <summary>
         /// Unidad de medida del material
         /// </summary>
         public UnitEmun Unit { get; set; }
