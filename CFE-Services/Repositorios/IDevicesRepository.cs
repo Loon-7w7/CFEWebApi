@@ -1,5 +1,6 @@
 ﻿using CFE_Domain.Devices;
 using CFE_Requets.Devices;
+using CFE_Responses.Devicess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,12 @@ namespace CFE_Services.Repositorios
         /// optiene todos los dispositivos
         /// </summary>
         /// <returns></returns>
-        Task<List<Devices>> GetAll();
+        Task<getDeviceAll> GetAll();
         /// <summary>
         /// Optiene dispositivos por id
         /// </summary>
         /// <param name="resquest"></param>
         /// <returns></returns>
-        Task<Devices> GetById(DeviceGetByID resquest);
+        Task<GetDeviceByidResponse> GetById(DeviceGetByID resquest);
     }
 }

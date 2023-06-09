@@ -20,7 +20,7 @@ namespace CFE_Services.Repositorios
         /// obtine una lista de las entidad
         /// </summary>
         /// <returns>una lista de entidades</returns>
-        Task<List<TEntity>> AllGet();
+        Task<List<TEntity>> AllGet(params Expression<Func<TEntity, object>>[] includes);
         /// <summary>
         /// Obtine una entidad por su id
         /// </summary>

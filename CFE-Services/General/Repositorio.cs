@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CFE_Services.General
 {
@@ -60,16 +61,21 @@ namespace CFE_Services.General
         /// obtine una lista de las entidad
         /// </summary>
         /// <returns>una lista de entidades</returns>
-        public async Task<List<TEntity>> AllGet() 
+        public async Task<List<TEntity>> AllGet(params Expression<Func<TEntity, object>>[] includes) 
         {
-            List<TEntity> entities = await _dbset.ToListAsync();
-            if(entities.Count == 0) 
+            IQueryable<TEntity> entities = _dbset;
+            if (includes != null) 
+            {
+                entities = includes.Aggregate(entities, (current, include) => current.Include(include));
+            }
+            List<TEntity> Response = await entities.ToListAsync();
+            if(Response.Count == 0) 
             {
                 return new List<TEntity>();
             }
             else 
             {
-                return entities;
+                return Response;
             }
             
         }

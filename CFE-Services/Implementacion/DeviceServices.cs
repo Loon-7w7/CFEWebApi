@@ -2,8 +2,10 @@
 using CFE_Domain.Material;
 using CFE_Requets.AmountMaterial;
 using CFE_Requets.Devices;
+using CFE_Responses.Devicess;
 using CFE_Services.Repositorios;
 using CFEDatabase.Migrations;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CFE_Services.Implementacion
 {
@@ -41,6 +43,7 @@ namespace CFE_Services.Implementacion
                 isHeavy = request.isHeavy,
                 isSemiInsulated = request.isSemiInsulated,
             };
+            List<AmountMaterial> materials = new List<AmountMaterial>();
             foreach(var mat in request.materials) 
             {
                 Material? material = await _materialRepository.GetId(mat.Id);
@@ -54,34 +57,37 @@ namespace CFE_Services.Implementacion
                         amount = mat.Amount,
                         material = material
                     };
-                    devices.materials.Add(amountMaterial);
+                    materials.Add(amountMaterial);
                 }
                 else 
                 {
                     return false;
                 }
             }
+            devices.materials = materials;
             return await _DevicesRepository.Add(devices);
         }
 
-        public async Task<List<Devices>> GetAll()
+        public async Task<getDeviceAll> GetAll()
         {
-            List<Devices> response = new List<Devices>();
-            response = await _DevicesRepository.AllGet();
+            getDeviceAll response = new getDeviceAll();
+            response.devices = await _DevicesRepository.AllGet(Entity => Entity.materials);
             return response;
         }
 
-        public async Task<Devices> GetById(DeviceGetByID resquest)
+        public async Task<GetDeviceByidResponse> GetById(DeviceGetByID resquest)
         {
+            GetDeviceByidResponse response = new GetDeviceByidResponse();
             Devices? device = await _DevicesRepository.GetId(resquest.Id);
             if (device != null) 
             {
-                return device;
+                response.device = device;
             }
             else 
             {
-                return new Devices();
+                response.device = new Devices();
             }
+            return response;
         }
     }
 }
