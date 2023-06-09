@@ -1,4 +1,5 @@
-﻿using CFE_Domain.Enum;
+﻿using CFE_Domain.Devices;
+using CFE_Domain.Enum;
 using CFE_Domain.Material;
 using CFE_Domain.Usuario;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,12 @@ namespace CFE_DataBase
         /// Datos de los Materiales
         /// </summary>
         public DbSet<Material> Materials { get; set; }
+        /// <summary>
+        /// Datos de los usuarios
+        /// </summary>
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<AmountMaterial> AmountsMaterial { get; set; }
+        public DbSet<Devices> Devices { get; set; }
         /// <summary>
         /// Contructor que resive la configuracion
         /// </summary>
@@ -63,6 +69,8 @@ namespace CFE_DataBase
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now,
             });
+            modelBuilder.Entity<AmountMaterial>();
+            modelBuilder.Entity<Devices>();
         }
     }
 }
