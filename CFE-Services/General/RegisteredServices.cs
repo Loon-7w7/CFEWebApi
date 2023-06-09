@@ -23,7 +23,8 @@ namespace CFE_Services.General
             {
                 new ServicesEntity{Irepositorio = typeof(IRepository<>), repositorio = typeof(Repositorio<>)},
                 new ServicesEntity{Irepositorio = typeof(IMaterialRepository), repositorio = typeof(MaterialService)},
-                new ServicesEntity{Irepositorio= typeof(IUserRepository),repositorio = typeof(UserService)},
+                new ServicesEntity{Irepositorio = typeof(IUserRepository),repositorio = typeof(UserService)},
+                new ServicesEntity{Irepositorio = typeof(IDevicesRepository), repositorio = typeof(DeviceServices)}
             };
         }
     }
