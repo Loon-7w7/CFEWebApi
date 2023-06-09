@@ -10,7 +10,6 @@
             return new List<Object>() 
             {
                 new ErrorHandlingMiddleware(),
-                new EntityFrameworkExceptionMiddleware(),
             };
         } 
     }

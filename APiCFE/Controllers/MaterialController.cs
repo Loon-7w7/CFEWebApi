@@ -59,8 +59,9 @@ namespace APiCFE.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Post([FromBody] CreateMaterialRequest request)
         {
-            await materialRepository.Add(request);
-            return Ok("Se creo el material correctamete");
+            bool response = await materialRepository.Add(request);
+            if (response) { return Ok("Se creo el material correctamete"); }
+            else { return BadRequest("No se puedo crear el material"); }
         }
         /// <summary>
         /// Crea multiples materiales
@@ -72,8 +73,9 @@ namespace APiCFE.Controllers
         public async Task<IActionResult> multipost([FromBody] List<CreateMaterialRequest> list) 
         {
             CreateMultiMaterialrequest rquest = new CreateMultiMaterialrequest() { Materials = list };
-            await materialRepository.CreateMulti(rquest);
-            return Ok("Se crearon exitonzamente todos los materiales");
+             bool response = await materialRepository.CreateMulti(rquest);
+            if (response) { return Ok("Se crearon exitonzamente todos los materiales"); }
+            else { return BadRequest("No se puedo crear algunos el material"); }
 
         }
         /// <summary>
@@ -85,8 +87,10 @@ namespace APiCFE.Controllers
         [HttpPut("Update")]
         public async Task<IActionResult> Put([FromBody] UpdateMaterialRequest request)
         {
-            await materialRepository.Update(request);
-            return Ok("Se actulizado Correctamente");
+            bool response = await materialRepository.Update(request);
+            if (response) { return Ok("Se actulizado Correctamente"); }
+            else { return BadRequest("No se pudo actualizar el material"); }
+            
         }
         /// <summary>
         /// Elimina los materiales
@@ -98,8 +102,10 @@ namespace APiCFE.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             DeleteMaterialRequest request = new DeleteMaterialRequest() { Id = id };
-            await materialRepository.Delete(request);
-            return Ok("Se elimino el material");
+            bool response = await materialRepository.Delete(request);
+            if (response)  {  return Ok("Se elimino el material"); }
+            else  { return BadRequest("No se puedo eliminar el material"); }
+            
         }
     }
 }

@@ -68,6 +68,21 @@ namespace CFE_Services.Implementacion
                 throw new Exception("Usuario no encontrado");
             }
         }
+
+        public async Task<bool> CreateUser(CreateUserRequest request)
+        {
+            Usuario usuario = new Usuario() 
+            {
+                Id = Guid.NewGuid(),
+                Username = request.Username,
+                Password = request.Password,
+                Role = request.Role,
+                CreateDate = DateTime.UtcNow,
+                UpdateDate = DateTime.UtcNow,
+            };
+            return await _userRepository.Add(usuario);
+        }
+
         /// <summary>
         /// Verifica si es valido el token para inicio de secion
         /// </summary>

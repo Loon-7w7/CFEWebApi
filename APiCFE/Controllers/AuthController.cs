@@ -58,5 +58,14 @@ namespace APiCFE.Controllers
             return BadRequest(false);
 
         }
+        [Authorize(Roles = "Admin")]
+        [HttpPost("Cretate")]
+        public async Task<IActionResult> CreateUser([FromBody]CreateUserRequest resquest) 
+        {
+            bool response = await repository.CreateUser(resquest);
+            if (response) { return Ok("Se elimino el usario"); }
+            else { return BadRequest("No se puedo eliminar el usuario"); }
+
+        }
     }
 }

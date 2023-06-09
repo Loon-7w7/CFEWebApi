@@ -14,7 +14,7 @@ namespace CFE_Services.Repositorios
         /// </summary>
         /// <param name="entity">datos de la entidad</param>
         /// <returns></returns>
-        Task Add(TEntity entity);
+        Task<bool> Add(TEntity entity);
         /// <summary>
         /// obtine una lista de las entidad
         /// </summary>
@@ -31,13 +31,13 @@ namespace CFE_Services.Repositorios
         /// </summary>
         /// <param name="id">id de la entidad</param>
         /// <returns></returns>
-        Task Delete(Guid id);
+        Task<bool> Delete(Guid id);
         /// <summary>
         /// actuliza los todos de la entidad
         /// </summary>
         /// <param name="entity">datos de la entidad</param>
         /// <returns></returns>
-        Task Update(TEntity entity);
+        Task<bool> Update(TEntity entity);
         /// <summary>
         /// Busca una lista dependiendo de la exprecion que se pase
         /// </summary>

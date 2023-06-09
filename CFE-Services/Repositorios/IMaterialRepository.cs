@@ -31,24 +31,24 @@ namespace CFE_Services.Repositorios
         /// </summary>
         /// <param name="material">Datos del material</param>
         /// <returns></returns>
-        Task Add(CreateMaterialRequest request);
+        Task<bool> Add(CreateMaterialRequest request);
         /// <summary>
         /// Actuliza el material
         /// </summary>
         /// <param name="material">Material Actualizado</param>
         /// <returns></returns>
-        Task Update(UpdateMaterialRequest request);
+        Task<bool> Update(UpdateMaterialRequest request);
         /// <summary>
         /// Elimina un material
         /// </summary>
         /// <param name="id">id del material</param>
         /// <returns></returns>
-        Task Delete(DeleteMaterialRequest request);
+        Task<bool> Delete(DeleteMaterialRequest request);
         /// <summary>
         /// Crea multiples materiales
         /// </summary>
         /// <param name="resquest">Lista de materiales</param>
         /// <returns></returns>
-        Task CreateMulti(CreateMultiMaterialrequest resquest);
+        Task<bool> CreateMulti(CreateMultiMaterialrequest resquest);
     }
 }

@@ -25,5 +25,11 @@ namespace CFE_Services.Repositorios
         /// <param name="request"></param>
         /// <returns></returns>
         bool isValidateToken(IsVlidateTokenRequest request);
+        /// <summary>
+        /// Crea un usuario
+        /// </summary>
+        /// <param name="request">datos del usuario</param>
+        /// <returns></returns>
+        Task<bool> CreateUser(CreateUserRequest request);
     }
 }

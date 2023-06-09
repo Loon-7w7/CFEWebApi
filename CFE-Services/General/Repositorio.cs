@@ -43,16 +43,17 @@ namespace CFE_Services.General
         /// </summary>
         /// <param name="entity">datos de la entidad</param>
         /// <returns></returns>
-        public async Task Add(TEntity entity) 
+        public async Task<bool> Add(TEntity entity) 
         {
             try 
             {
                 _dbset.Add(entity);
                 await _context.SaveChangesAsync();
+                return true;
             } 
             catch (Exception ex) 
             {
-                throw new EntityCreateException($"No se pudo crear un nuevo {entityType.Name}");
+                return false;
             }
             
         }
@@ -65,7 +66,7 @@ namespace CFE_Services.General
             List<TEntity> entities = await _dbset.ToListAsync();
             if(entities.Count == 0) 
             {
-                throw new EmptyListException($"La lista esta {entityType.Name} vacia");
+                return new List<TEntity>();
             }
             else 
             {
@@ -81,22 +82,14 @@ namespace CFE_Services.General
         public async Task<TEntity?> GetId(Guid id) 
         {
             TEntity? entity = await _dbset.FindAsync(id);
-            if(entity == null) 
-            {
-                throw new EntityNotFoundException($"No se encontro ningun {entityType.Name}");
-            }
-            else 
-            {
-                return entity;
-            }
-            
+                return entity; 
         }
         /// <summary>
         /// Elimina una entidad
         /// </summary>
         /// <param name="id">id de la entidad</param>
         /// <returns></returns>
-        public async Task Delete(Guid id) 
+        public async Task<bool> Delete(Guid id) 
         {
             try
             {
@@ -106,10 +99,11 @@ namespace CFE_Services.General
                     _dbset.Remove(entidad);
                     await _context.SaveChangesAsync();
                 }
+                return true;
             }
             catch (Exception ex)
             {
-                throw new EntityDeleteException($"Error al eliminar la el {entityType.Name}");
+                return false;
             }
         }
         /// <summary>
@@ -117,17 +111,18 @@ namespace CFE_Services.General
         /// </summary>
         /// <param name="entity">datos de la entidad</param>
         /// <returns></returns>
-        public async Task Update(TEntity entity) 
+        public async Task<bool> Update(TEntity entity) 
         {
             try
             {
                 _dbset.Attach(entity);
                 _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+                return true;
             }
             catch (Exception ex)
             {
-                throw new EntityUpdateException($"Error al actualizar {entityType.Name}.");
+                return false;
             }
         }
         /// <summary>
@@ -140,7 +135,7 @@ namespace CFE_Services.General
             List<TEntity> entities = await _dbset.Where(expresion).ToListAsync();
             if(entities.Count == 0) 
             {
-                throw new EntityNotFoundException($"No se encontro ningun {entityType.Name}");
+                return new List<TEntity>();
             }
             else 
             {
@@ -155,14 +150,8 @@ namespace CFE_Services.General
         public async Task<TEntity> SearchFirst(Expression<Func<TEntity, bool>> expresion)
         {
             TEntity entity = await _dbset.FirstAsync(expresion);
-            if(entity == null) 
-            {
-                throw new EntityNotFoundException($"No se encontro ningun {entityType.Name}");
-            }
-            else 
-            {
                 return entity;
-            }
+
         }
     }
 }
