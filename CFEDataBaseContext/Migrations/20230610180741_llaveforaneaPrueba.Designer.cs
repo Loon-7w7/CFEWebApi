@@ -3,6 +3,7 @@ using System;
 using CFE_DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CFEDatabase.Migrations
 {
     [DbContext(typeof(CFEDataBaseContext))]
-    partial class CFEDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230610180741_llaveforaneaPrueba")]
+    partial class llaveforaneaPrueba
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +61,10 @@ namespace CFEDatabase.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("DevicesId")
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("DevicesId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("UpdateDate")
@@ -139,11 +145,11 @@ namespace CFEDatabase.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3ab322e3-2840-4524-a816-197b7ab9cd75"),
-                            CreateDate = new DateTime(2023, 6, 10, 12, 10, 36, 914, DateTimeKind.Local).AddTicks(216),
+                            Id = new Guid("80d4e6e6-4137-4531-a385-2602f695924f"),
+                            CreateDate = new DateTime(2023, 6, 10, 12, 7, 41, 384, DateTimeKind.Local).AddTicks(9186),
                             Password = "123456789",
                             Role = 0,
-                            UpdateDate = new DateTime(2023, 6, 10, 12, 10, 36, 914, DateTimeKind.Local).AddTicks(228),
+                            UpdateDate = new DateTime(2023, 6, 10, 12, 7, 41, 384, DateTimeKind.Local).AddTicks(9196),
                             Username = "Loon"
                         });
                 });
@@ -152,9 +158,7 @@ namespace CFEDatabase.Migrations
                 {
                     b.HasOne("CFE_Domain.Devices.Devices", null)
                         .WithMany("materials")
-                        .HasForeignKey("DevicesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DevicesId");
 
                     b.HasOne("CFE_Domain.Material.Material", "material")
                         .WithMany()

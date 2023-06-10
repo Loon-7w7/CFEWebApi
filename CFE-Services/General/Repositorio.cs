@@ -133,18 +133,23 @@ namespace CFE_Services.General
         /// <summary>
         /// Busca dependiendo de la exprecion que se pase
         /// </summary>
-        /// <param name="expresion">Esprecion de bsuqueda</param>
+        /// <param name="expresion">Esprecion de busqueda</param>
         /// <returns></returns>
-        public async Task<List<TEntity>> SearchWhere(Expression<Func<TEntity, bool>> expresion) 
+        public async Task<List<TEntity>> SearchWhere(Expression<Func<TEntity, bool>> expresion, params Expression<Func<TEntity, object>>[] includes) 
         {
-            List<TEntity> entities = await _dbset.Where(expresion).ToListAsync();
-            if(entities.Count == 0) 
+            IQueryable<TEntity> entities = _dbset;
+            if (includes != null)
+            {
+                entities = includes.Aggregate(entities, (current, include) => current.Include(include));
+            }
+            List<TEntity> Response = await entities.Where(expresion).ToListAsync();
+            if (Response.Count == 0)
             {
                 return new List<TEntity>();
             }
-            else 
+            else
             {
-                return entities;
+                return Response;
             }
         }
         /// <summary>
@@ -152,9 +157,14 @@ namespace CFE_Services.General
         /// </summary>
         /// <param name="expresion">Esprecion de bsuqueda</param>
         /// <returns></returns>
-        public async Task<TEntity> SearchFirst(Expression<Func<TEntity, bool>> expresion)
+        public async Task<TEntity?> SearchFirst(Expression<Func<TEntity, bool>> expresion, params Expression<Func<TEntity, object>>[] includes)
         {
-            TEntity entity = await _dbset.FirstAsync(expresion);
+            IQueryable<TEntity> entities = _dbset;
+            if (includes != null)
+            {
+                entities = includes.Aggregate(entities, (current, include) => current.Include(include));
+            }
+            TEntity? entity = await entities.FirstOrDefaultAsync(expresion);
                 return entity;
 
         }
