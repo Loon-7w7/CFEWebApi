@@ -35,7 +35,7 @@ namespace APiCFE.Controllers
         public async Task<IActionResult> Get()
         {
             getDeviceAll response = await devicesRepository.GetAll();
-            return Ok(response);
+            return Ok(response.devices);
         }
         /// <summary>
         /// obtien un dispositivo por id
@@ -57,8 +57,17 @@ namespace APiCFE.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPost("Create")]
-        public async Task<IActionResult> Post([FromBody] CreateDevicesRequest request)
+        public async Task<IActionResult> Post([FromBody] CreateDevicesRequestbody requestBody)
         {
+
+            CreateDevicesRequest request = new CreateDevicesRequest()
+            {
+                name = requestBody.name,
+                voltage = requestBody.voltage,
+                isHeavy = bool.Parse(requestBody.isHeavy),
+                isSemiInsulated = bool.Parse(requestBody.isSemiInsulated),
+                materials = requestBody.materials,
+            };
             GeneralResponse response = new GeneralResponse();
             response.success = await devicesRepository.Add(request);
             if(response.success) 
