@@ -115,6 +115,7 @@ namespace CFE_Services.Implementacion
                     Code = material.Code,
                     Name = material.Name,
                     Unit = material.Unit,
+                    unirPrice = material.unirPrice,
                     CreateDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
                 };
